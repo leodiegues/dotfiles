@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+# Make nano the default editor
+export EDITOR='code';
+
+# Increase zsh history size
+export HISTSIZE='32768';
+export HISTFILESIZE="${HISTSIZE}";
+
+# Default language to US English and encoding to UTF-8
+export LANG='en_US.UTF-8';
+export LC_ALL='en_US.UTF-8';
