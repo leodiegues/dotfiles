@@ -1,6 +1,22 @@
 #!/usr/bin/env bash
 
 pyclean () {
-  # Cleans py[cod] and __pychache__ dirs in the current tree:
-  find . | grep -E "(__pycache__|\.py[cod]$)" | xargs rm -rf
+    # Cleans py[cod] and __pychache__ dirs in the current tree:
+    find . | grep -E "(__pycache__|\.py[cod]$)" | xargs rm -rf
+}
+
+connect-to-vpn () {
+    # Connects to the VPN using SNX
+    echo "Connecting to VPN..."
+    echo $SNX_PASSWORD | snx
+}
+
+pretty-csv () {
+    # Pretty-prints a CSV file
+    perl -pe 's/((?<=,)|(?<=^)),/ ,/g;' "$@" | column -t -s, | less  -F -S -X -K
+}
+
+pretty_tsv () {
+    # Pretty-prints a TSV file
+    perl -pe 's/((?<=\t)|(?<=^))\t/ \t/g;' "$@" | column -t -s $'\t' | less  -F -S -X -K
 }
