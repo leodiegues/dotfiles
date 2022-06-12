@@ -6,6 +6,10 @@ The structure of this dotfiles repository mimics the structure of the `$HOME` di
 
 Configuration files must be placed in the `.config` directory and should be named accordingly to the software they belong to.
 
+## Todo
+- [ ] Install custom fonts.
+- [ ] Automatically install Rose Piné theme for GTK.
+
 ## Credits
 
 - [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles)
