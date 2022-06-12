@@ -77,9 +77,6 @@ fi
 ## Installing SNX and adding a ~/.snxrc file:
 if [[ ! -f /usr/bin/snx ]]; then
     install-snx
-    snxrc_path = "$HOME/.snxrc"
-    touch $snxrc_path
-    echo "server\nusername\nreauth yes" > $snxrc_path
 fi
 
 # Terminal configuration --------------------------------------------------------
