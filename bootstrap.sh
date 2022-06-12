@@ -15,8 +15,9 @@ echo "* Running Fedora setup...[2/3]"
 source fedora.sh;
 
 run_bootstrap () {
-	rsync --exclude ".gitignore" \
-		--exclude ".git/" \
+	rsync --exclude ".git/" \
+		--exclude "media/" \
+		--exclude ".gitignore" \
 		--exclude "bootstrap.sh" \
 		--exclude "fedora.sh" \
 		--exclude "README.md" \
