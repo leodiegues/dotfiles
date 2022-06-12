@@ -1,4 +1,4 @@
-# leonardodiegues' dotfiles
+# ~/.dotfiles
 
 ![leonardodiegues' dotfiles](./media/banner.png)
 
