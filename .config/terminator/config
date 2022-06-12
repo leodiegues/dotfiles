@@ -1,23 +1,26 @@
 [global_config]
-  enabled_plugins = LaunchpadBugURLHandler, LaunchpadCodeURLHandler, APTURLHandler, TerminatorThemes
   always_split_with_profile = True
+  title_transmit_fg_color = "#ffffff"
+  title_transmit_bg_color = "#403c58"
+  title_inactive_fg_color = "#ffffff"
+  title_inactive_bg_color = "#6f6e85"
 [keybindings]
 [profiles]
   [[default]]
-    cursor_color = "#aaaaaa"
-  [[Espresso]]
-    background_color = "#323232"
-    cursor_color = "#d6d6d6"
-    font = Liberation Mono 9
+    palette = "#403c58:#ea6f91:#9bced7:#f1ca93:#34738e:#c3a5e6:#eabbb9:#faebd7:#6f6e85:#ea6f91:#9bced7:#f1ca93:#34738e:#c3a5e6:#eabbb9:#ffffff"
     foreground_color = "#ffffff"
-    palette = "#353535:#d25252:#a5c261:#ffc66d:#6c99bb:#d197d9:#bed6ff:#eeeeec:#535353:#f00c0c:#c2e075:#e1e48b:#8ab7d9:#efb5f7:#dcf4ff:#ffffff"
+    background_color = "#1f1d29"
+    cursor_color = "#ffffff"
+    font = Comic Mono 8
     use_system_font = False
+
 [layouts]
   [[default]]
-    [[[window0]]]
-      type = Window
-      parent = ""
     [[[child1]]]
       type = Terminal
       parent = window0
+      profile = default
+    [[[window0]]]
+      type = Window
+      parent = ""
 [plugins]
