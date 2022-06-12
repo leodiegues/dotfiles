@@ -26,13 +26,13 @@ run_bootstrap () {
 }
 
 echo "* Running bootstrap...[3/3]"
-if [[ $1 == "--force" ]] || [[ $1 == "-f" ]]; then
+if [ "$1" == "--force" -o "$1" == "-f" ]; then
 	run_bootstrap
 else
 	read -p "This may overwrite existing files in your home directory. Are you sure? (y/N)" -n 1
 	echo ""
 	if [[ $REPLY =~ ^[Yy]$ ]]; then
 		run_bootstrap
-	fi;
-fi;
+	fi
+fi
 unset run_bootstrap
