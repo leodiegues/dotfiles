@@ -5,6 +5,11 @@ pyclean () {
     find . | grep -E "(__pycache__|\.py[cod]$)" | xargs rm -rf
 }
 
+create-snxrc-file () {
+    # Creates a ~/.snxrc file with the SNX credentials
+    echo "server $SNX_SERVER\nusername $SNX_USERNAME\nreauth yes" > ~/.snxrc
+}
+
 connect-to-vpn () {
     # Connects to the VPN using SNX
     echo "Connecting to VPN..."
