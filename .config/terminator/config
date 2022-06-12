@@ -11,7 +11,7 @@
     foreground_color = "#ffffff"
     background_color = "#1f1d29"
     cursor_color = "#ffffff"
-    font = Comic Mono 8
+    font = SF Mono 9
     use_system_font = False
 
 [layouts]
