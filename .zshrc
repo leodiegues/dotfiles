@@ -27,5 +27,6 @@ if [ -d $HOME/.pyenv ]; then
     eval "$(pyenv init -)"
 fi
 
-# Load `oh-my-zsh` configuration:
+# Load default configuration:
+load-custom-env-presets
 source $ZSH/oh-my-zsh.sh
