@@ -5,21 +5,22 @@
 
 # Package installation ----------------------------------------------------------
 
-install-core-packages() {
+install-core-packages () {
     # Install the core packages required to build and run the project.
     sudo dnf -y update
     sudo dnf -y install zsh util-linux-user terminator 'dnf-command(config-manager)'
-    sudo dnf -y install gnome-tweak-tool dnf-plugins-core
+    sudo dnf -y install gnome-tweak-tool dnf-plugins-core snapd
+    sudo ln -s /var/lib/snapd/snap /snap # configure snapd.
 }
 
-install-vscode() {
+install-vscode () {
     # Install Visual Studio Code
     sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
     sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
     sudo dnf -y install code
 }
 
-install-docker() {
+install-docker () {
     # Install Docker-CE
     sudo dnf -y install docker
     sudo systemctl enable docker
@@ -78,6 +79,12 @@ fi
 if [[ ! -f /usr/bin/snx ]]; then
     install-snx
 fi
+
+## Installing snap packages:
+sudo snap install discord
+sudo snap install cider --edge
+sudo snap install insomnia
+sudo snap install dbeaver-ce
 
 # Terminal configuration --------------------------------------------------------
 
