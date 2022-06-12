@@ -30,6 +30,14 @@ if [[ ! -d $HOME/.pyenv ]]; then
     curl https://pyenv.run | bash
 fi
 
+## Installing R:
+if [[ ! -f /usr/bin/R ]]; then
+    sudo dnf -y install R libcurl-devel openssl-devel libxml2-devel 'dnf-command(copr)'
+    sudo dnf -y install R-dplyr R-dbplyr R-purrr R-tidyr R-readr R-ggplot2 R-httr R-rvest
+    sudo dnf copr enable -y iucar/cran
+    sudo dnf -y install R-CoprManager # for additional packages
+fi
+
 # Terminal configuration --------------------------------------------------------
 
 ## Setting terminator as the default terminal:
