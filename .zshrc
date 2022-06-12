@@ -6,8 +6,6 @@ ZSH_DISABLE_COMPFIX=true
 
 plugins=(git docker pyenv dnf common-aliases last-working-dir)
 
-source $ZSH/oh-my-zsh.sh
-
 # Custom aliases, exports and functions:
 for file in ~/.{exports,aliases,functions,extra}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file";
@@ -19,8 +17,9 @@ unset file;
 
 # pyenv configuration:
 if [ -d $HOME/.pyenv ]; then
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init -)"
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
 fi
 
+source $ZSH/oh-my-zsh.sh
