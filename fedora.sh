@@ -9,7 +9,9 @@ install-core-packages () {
     # Install the core packages required to build and run the project.
     sudo dnf -y update
     sudo dnf -y install zsh util-linux-user terminator 'dnf-command(config-manager)'
-    sudo dnf -y install gnome-tweak-tool dnf-plugins-core snapd
+    sudo dnf -y install https://download1.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf -y install https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+    sudo dnf -y install gnome-tweak-tool dnf-plugins-core snapd discord
     sudo ln -s /var/lib/snapd/snap /snap # configure snapd.
 }
 
@@ -26,6 +28,12 @@ install-docker () {
     sudo systemctl enable docker
     sudo systemctl start docker
     sudo usermod -aG docker $USER
+}
+
+install-pyenv () {
+    # Install latest version of Pyenv
+    sudo dnf -y install readline-devel.x86_64 libsq3-devel.x86_64
+    curl https://pyenv.run | bash
 }
 
 install-r () {
@@ -67,7 +75,7 @@ fi
 
 ## Installing pyenv:
 if [[ ! -d $HOME/.pyenv ]]; then
-    curl https://pyenv.run | bash
+    install-pyenv
 fi
 
 ## Installing R:
@@ -75,21 +83,21 @@ if [[ ! -f /usr/bin/R ]]; then
     install-r
 fi
 
-## Installing SNX and adding a ~/.snxrc file:
+## Installing SNX and adding a ~/. snxrc file:
 if [[ ! -f /usr/bin/snx ]]; then
     install-snx
 fi
 
-## Installing snap packages:
-sudo snap install discord
-sudo snap install cider --edge
-sudo snap install insomnia
-sudo snap install dbeaver-ce
+## Intalling snap packages:
+sudo snap -y install cider --edge
+sudo snap -y install insomnia
+sudo snap -y install dbeaver-ce
 
 # Terminal configuration --------------------------------------------------------
 
-## Setting terminator as the default terminal:
+## Override some GNOME settings:
 gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/terminator
+gsettings set org.gnome.mutter workspaces-only-on-primary false
 
 ## Setting ZSH as the default shell:
 chsh -s $(which zsh)
