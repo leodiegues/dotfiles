@@ -7,7 +7,7 @@ pyclean () {
 
 create-snxrc-file () {
     # Creates a ~/.snxrc file with the SNX credentials
-    echo "server $SNX_SERVER\nusername $SNX_USERNAME\nreauth yes" > ~/.snxrc
+    echo "server $SNX_SERVER\nusername $SNX_USERNAME" > ~/.snxrc
 }
 
 connect-to-vpn () {
