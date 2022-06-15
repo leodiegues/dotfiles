@@ -88,10 +88,8 @@ install-snx () {
         rm -f compat-libstdc++-33-3.2.3-72.el7.i686.rpm
 
         ## Install snx_linux.sh
-        wget https://vpnportal.aktifbank.com.tr/SNX/INSTALL/snx_install.sh --no-check-certificate
-        chmod +x snx_install.sh
-        sudo ./snx_install.sh
-        rm -f snx_install.sh
+        chmod +x ./bin/snx_install_linux30.sh
+        sudo ./bin/snx_install_linux30.sh
     else
         echo "SNX is already installed."
     fi
