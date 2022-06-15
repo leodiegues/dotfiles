@@ -17,9 +17,9 @@ source fedora.sh;
 run_bootstrap () {
 	rsync --exclude ".git/" \
 		--exclude "media/" \
-        --exclude "templates/" \
         --exclude ".editorconfig" \
 		--exclude ".gitignore" \
+        --exclude ".extra.template" \
 		--exclude "bootstrap.sh" \
 		--exclude "fedora.sh" \
 		--exclude "README.md" \
