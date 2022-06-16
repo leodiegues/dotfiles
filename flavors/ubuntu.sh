@@ -28,7 +28,9 @@ install-core-packages () {
         libxml2-dev \
         libcurl4-openssl-dev \
         libreadline-dev \
-        libreadline8
+        libreadline8 \
+        python-tk \
+        tk-dev
 
     if [[ ! -d /snap ]]; then
         echo "  - Creating symbolic link for snap..."
