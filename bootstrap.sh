@@ -2,6 +2,8 @@
 
 cd "$(dirname "${BASH_SOURCE}")";
 
+OS_FLAVOR=$1
+
 # Ask for the administrator password upfront
 sudo -v
 
@@ -11,13 +13,13 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 echo "* Checking for updates...[1/3]"
 git pull origin main
 
-echo "* Running Fedora setup...[2/3]"
-source fedora.sh;
+echo "* Running $OS_FLAVOR setup...[2/3]"
+source flavors/$OS_FLAVOR.sh;
 
 run_bootstrap () {
 	rsync --exclude ".git/" \
 		--exclude "media/" \
-        --exclude "bin/" \
+        --exclude "flavors/" \
         --exclude ".editorconfig" \
 		--exclude ".gitignore" \
         --exclude ".extra.template" \
@@ -30,7 +32,7 @@ run_bootstrap () {
 }
 
 echo "* Running bootstrap...[3/3]"
-if [ "$1" == "--force" -o "$1" == "-f" ]; then
+if [ "$2" == "--force" -o "$2" == "-f" ]; then
 	run_bootstrap
 else
 	read -p "This may overwrite existing files in your home directory. Are you sure? (y/N)" -n 1
