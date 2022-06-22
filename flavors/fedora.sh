@@ -130,4 +130,4 @@ fix-us-intl-keyboard-cedilla
 gsettings set org.gnome.desktop.default-applications.terminal exec /usr/bin/terminator
 gsettings set org.gnome.desktop.interface enable-animations false
 gsettings set org.gnome.mutter workspaces-only-on-primary false
-
+gsettings set org.gnome.shell.extensions.dash-to-dock isolate-workspaces true
