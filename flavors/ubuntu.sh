@@ -173,4 +173,3 @@ sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emula
 gsettings set org.gnome.desktop.interface enable-animations false
 gsettings set org.gnome.mutter workspaces-only-on-primary false
 gsettings set org.gnome.shell.app-switcher current-workspace-only true
-gsettings set org.gnome.shell.extensions.dash-to-dock isolate-workspaces true
