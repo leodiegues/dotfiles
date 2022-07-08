@@ -21,6 +21,7 @@ install-core-packages () {
         gdebi \
         software-properties-common \
         dirmngr \
+        direnv \
         lsb-release \
         libssl-dev \
         libsqlite3-dev \
