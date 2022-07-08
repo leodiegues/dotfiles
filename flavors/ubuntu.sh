@@ -157,6 +157,7 @@ fix-us-intl-keyboard-cedilla () {
 install-core-packages
 install-oh-my-zsh
 install-vscode
+install-docker
 install-pyenv
 install-r
 install-snx
