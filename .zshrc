@@ -27,6 +27,11 @@ if [ -d $HOME/.pyenv ]; then
     eval "$(pyenv init -)"
 fi
 
+# Load direnv if available:
+if [ -d /usr/bin/direnv ]; then
+    eval "$(direnv hook zsh)"
+fi
+
 # Load default configuration:
 load-custom-env-presets
 source $ZSH/oh-my-zsh.sh
