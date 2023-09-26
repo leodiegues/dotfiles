@@ -165,9 +165,9 @@ install-snx
 install-discord
 
 ## Intalling snap packages:
-sudo snap install cider --edge
-sudo snap install insomnia
-sudo snap install dbeaver-ce
+# sudo snap install cider --edge
+# sudo snap install insomnia
+# sudo snap install dbeaver-ce
 
 ## Override GNOME settings:
 fix-us-intl-keyboard-cedilla
