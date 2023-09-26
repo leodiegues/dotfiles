@@ -16,6 +16,14 @@ connect-to-vpn () {
     echo $SNX_PASSWORD | snx
 }
 
+connect-to-ec2 () {
+    # Connects to an EC2 instance using SSH
+    aws ec2-instance-connect ssh \
+        --os-user $AWS_INSTANCE_USER \
+        --instance-id $AWS_INSTANCE_ID \
+        --region $AWS_INSTANCE_REGION
+}
+
 pretty-csv () {
     # Pretty-prints a CSV file
     perl -pe 's/((?<=,)|(?<=^)),/ ,/g;' "$@" | column -t -s, | less  -F -S -X -K
