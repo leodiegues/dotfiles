@@ -15,5 +15,5 @@ git clone https://github.com/leodiegues/dotfiles.git ~/.dotfiles
 Run the playbook
 ```bash
 cd ~/.dotfiles
-ansible-playbook -i hosts playbook.yml --ask-become-pass --ask-vault-pass
+ansible-playbook -i hosts playbook.yml --ask-become-pass
 ```
