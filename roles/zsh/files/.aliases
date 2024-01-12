@@ -14,6 +14,6 @@ alias play='ansible-playbook'
 alias pwroff='shutdown -h now'
 
 # Go-tos
-alias cdw='cd ~/workspace'
-alias cdp='cd ~/workspace/personal'
-alias cdd='cd ~/workspace/dotfiles'
+alias cdw='cd ~/workspaces'
+alias cdp='cd ~/workspaces/personal'
+alias cdd='cd ~/dotfiles'
