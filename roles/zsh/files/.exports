@@ -12,3 +12,8 @@ export LC_ALL='en_US.UTF-8';
 # `pyenv`
 export PYENV_ROOT="$HOME/.pyenv"
 add-to-path "$PYENV_ROOT/bin"
+
+# `pnpm`
+export PNPM_HOME="/home/moseisley/.local/share/pnpm"
+add-to-path $PNPM_HOME
+

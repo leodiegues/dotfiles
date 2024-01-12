@@ -28,14 +28,16 @@
     repo: 'https://github.com/robbyrussell/oh-my-zsh'
     dest: '{{ user_home_dir }}/.oh-my-zsh'
     version: master
-    update: no
+    update: false
   when: not oh_my_zsh_stat.stat.exists
 
-- name: Copy zshrc file
+- name: Copy zsh files
   ansible.builtin.copy:
-    src: '{{ role_files }}/.zshrc'
-    dest: '{{ home }}/.zshrc'
+    src: '{{ item }}'
+    dest: '{{ home }}/'
     owner: '{{ user_name }}'
     group: '{{ user_name }}'
-    mode: 0644
+    mode: '0644'
+  with_fileglob:
+    - '{{ role_files }}/.*'
   when: overwrite_existing_files | bool

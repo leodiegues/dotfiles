@@ -1,0 +1,27 @@
+---
+- name: Check if node is installed (apt)
+  become: true
+  ansible.builtin.stat:
+    path: '/usr/bin/node'
+  register: node_installed
+
+- name: Add nodejs apt key and repository (apt)
+  become: true
+  ansible.builtin.command: curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+  when: not node_installed.stat.exists
+
+- name: Install nodejs (apt)
+  become: true
+  ansible.builtin.apt:
+    name: nodejs
+    state: present
+    update_cache: true
+  when: not node_installed.stat.exists
+
+- name: Install global packages (apt)
+  become: true
+  ansible.builtin.npm:
+    global: true
+    name: '{{ item }}'
+  with_items:
+    - pnpm

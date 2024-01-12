@@ -19,6 +19,8 @@
       tags: [snx]
     - role: vscode
       tags: [vscode]
+    - role: node
+      tags: [node]
 
     # Galaxy
     - role: staticdev.pyenv
