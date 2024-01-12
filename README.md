@@ -17,3 +17,7 @@ Run the playbook
 cd ~/.dotfiles
 ansible-playbook -i hosts playbook.yml --ask-become-pass
 ```
+If you want to run only a specific tag
+```bash
+ansible-playbook -i hosts playbook.yml --ask-become-pass --tags "tag1,tag2"
+```
