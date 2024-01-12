@@ -1,0 +1,19 @@
+# Docker
+alias d='docker'
+alias dc='docker compose'
+alias dce='docker compose exec'
+alias dcl='docker compose logs'
+alias dcd='docker compose down'
+alias dcdv='docker compose down -v'
+alias dcr='docker compose run --rm'
+
+# Ansible
+alias play='ansible-playbook'
+
+# System
+alias pwroff='shutdown -h now'
+
+# Go-tos
+alias cdw='cd ~/workspace'
+alias cdp='cd ~/workspace/personal'
+alias cdd='cd ~/workspace/dotfiles'

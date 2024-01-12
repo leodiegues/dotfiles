@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
-
 # Make nano the default editor
-export EDITOR='code';
+export EDITOR='nano';
 
 # Increase zsh history size
 export HISTSIZE='32768';
@@ -10,3 +8,7 @@ export HISTFILESIZE="${HISTSIZE}";
 # Default language to US English and encoding to UTF-8
 export LANG='en_US.UTF-8';
 export LC_ALL='en_US.UTF-8';
+
+# `pyenv`
+export PYENV_ROOT="$HOME/.pyenv"
+add-to-path "$PYENV_ROOT/bin"

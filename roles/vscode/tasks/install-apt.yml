@@ -1,0 +1,47 @@
+---
+- name: Check if VS Code is installed (apt)
+  become: true
+  ansible.builtin.stat:
+    path: '/usr/bin/code'
+  register: vscode_installed
+
+- name: Install dependencies (apt)
+  become: true
+  ansible.builtin.apt:
+    name:
+      - ca-certificates
+      - apt-transport-https
+    state: present
+  when: not vscode_installed.stat.exists
+
+- name: Create APT keyrings dir (apt)
+  become: true
+  ansible.builtin.file:
+    path: '/etc/apt/keyrings'
+    state: directory
+    mode: 'u=rwx,go=rx'
+  when: not vscode_installed.stat.exists
+
+- name: Install key (apt)
+  become: true
+  ansible.builtin.get_url:
+    url: 'https://packages.microsoft.com/keys/microsoft.asc'
+    dest: '/etc/apt/keyrings/'
+    mode: 'u=rw,go=r'
+    force: true
+  when: not vscode_installed.stat.exists
+
+- name: Install VS Code repository (apt)
+  become: true
+  ansible.builtin.apt_repository:
+    repo: 'deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/microsoft.asc] https://packages.microsoft.com/repos/code stable main'
+    filename: vscode
+    state: present
+  when: not vscode_installed.stat.exists
+
+- name: Install VS Code (apt)
+  become: true
+  ansible.builtin.apt:
+    name: code
+    state: present
+  when: not vscode_installed.stat.exists

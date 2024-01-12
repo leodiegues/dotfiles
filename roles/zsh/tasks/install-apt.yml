@@ -1,0 +1,41 @@
+---
+- name: Check if zsh is installed
+  become: true
+  ansible.builtin.stat:
+    path: '/usr/bin/zsh'
+  register: zsh_installed
+
+- name: Install zsh
+  become: true
+  ansible.builtin.apt:
+    name: zsh
+    state: present
+  when: not zsh_installed.stat.exists
+
+- name: Change shell
+  become: true
+  ansible.builtin.user:
+    name: '{{ user_name }}'
+    shell: /bin/zsh
+
+- name: Checks for oh-my-zsh installation
+  ansible.builtin.stat:
+    path: '{{ home }}/.oh-my-zsh'
+  register: oh_my_zsh_stat
+
+- name: Install Oh-My-zsh
+  ansible.builtin.git:
+    repo: 'https://github.com/robbyrussell/oh-my-zsh'
+    dest: '{{ user_home_dir }}/.oh-my-zsh'
+    version: master
+    update: no
+  when: not oh_my_zsh_stat.stat.exists
+
+- name: Copy zshrc file
+  ansible.builtin.copy:
+    src: '{{ role_files }}/.zshrc'
+    dest: '{{ home }}/.zshrc'
+    owner: '{{ user_name }}'
+    group: '{{ user_name }}'
+    mode: 0644
+  when: overwrite_existing_files | bool

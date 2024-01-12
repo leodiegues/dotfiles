@@ -1,0 +1,67 @@
+# https://github.com/anuvyklack/dotfiles/blob/main/roles/gnome3/tasks/gnome.yaml
+---
+- name: Install GNOME apps
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - gnome-tweaks
+      - gnome-shell-extensions
+      - dconf-editor
+    update_cache: yes
+    cache_valid_time: 3600
+    state: present
+
+- name: Setup GNOME settings
+  command: '{{ role_files }}/gnome-settings.sh'
+
+#########
+# power #
+#########
+
+- name: Never blank screen
+  community.general.dconf:
+    key: '/org/gnome/desktop/session/idle-delay'
+    value: 'uint32 0'
+
+- name: inactive timeout
+  community.general.dconf:
+    key: '/org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type'
+    value: "'nothing'"
+
+- name: inactive timeout on battery
+  community.general.dconf:
+    key: '/org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type'
+    value: "'nothing'"
+
+- name: show battery percentage
+  community.general.dconf:
+    key: '/org/gnome/desktop/interface/show-battery-percentage'
+    value: 'true'
+
+#################
+# date and time #
+#################
+
+- name: automatic timezone
+  community.general.dconf:
+    key: '/org/gnome/desktop/datetime/automatic-timezone'
+    value: 'true'
+
+- name: clock show date
+  community.general.dconf:
+    key: '/org/gnome/desktop/interface/clock-show-date'
+    value: 'true'
+
+- name: clock format
+  community.general.dconf:
+    key: '/org/gnome/desktop/interface/clock-format'
+    value: "'12h'"
+
+############
+# behavior #
+############
+
+- name: enable subpixel antialiasing
+  community.general.dconf:
+    key: '/org/gnome/settings-daemon/plugins/xsettings/antialiasing'
+    value: "'rgba'"

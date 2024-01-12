@@ -1,0 +1,13 @@
+---
+# Local directories
+home: '{{ ansible_env.HOME }}'
+user_name: '{{ ansible_env.USER }}'
+xdg_config_home: '{{ ansible_env.XDG_CONFIG_HOME | default(ansible_env.HOME + "/.config") }}'
+xdg_data_home: '{{ ansible_env.XDG_DATA_HOME | default(ansible_env.HOME + "/.local/share") }}'
+
+# Role directories
+role_files: '{{ role_path }}/files'
+role_templates: '{{ role_path }}/templates'
+
+# Overwrite existing files
+overwrite_existing_files: false

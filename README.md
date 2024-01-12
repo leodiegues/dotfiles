@@ -1,16 +1,19 @@
 # ~/.dotfiles
 
-![leonardodiegues' dotfiles](./media/banner.png)
+leodiegues' dotfiles
 
-The structure of this dotfiles repository mimics the structure of the `$HOME` directory.
+## Installation
 
-Configuration files must be placed in the `.config` directory and should be named accordingly to the software they belong to.
-
-## Todo
-- [ ] Install custom fonts.
-- [ ] Automatically install Rose Piné theme for GTK.
-
-## Credits
-
-- [mathiasbynens/dotfiles](https://github.com/mathiasbynens/dotfiles)
-- [sobolevn/dotfiles](https://github.com/sobolevn/dotfiles)
+Install [Ansible](https://www.ansible.com/)
+```bash
+sudo apt install ansible
+```
+Clone this repository
+```bash
+git clone https://github.com/leodiegues/dotfiles.git ~/.dotfiles
+```
+Run the playbook
+```bash
+cd ~/.dotfiles
+ansible-playbook -i hosts playbook.yml --ask-become-pass --ask-vault-pass
+```

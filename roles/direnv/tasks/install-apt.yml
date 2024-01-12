@@ -1,0 +1,22 @@
+---
+- name: Check if direnv is installed (apt)
+  become: true
+  ansible.builtin.stat:
+    path: '/usr/bin/direnv'
+  register: direnv_installed
+
+- name: Install direnv (apt)
+  become: true
+  ansible.builtin.apt:
+    name:
+      - direnv
+    update_cache: true
+    state: present
+  when: not direnv_installed.stat.exists
+
+- name: Copy direnv configs
+  ansible.builtin.copy:
+    src: '{{ role_files }}/'
+    dest: '{{ xdg_config_home }}/direnv/'
+    mode: '0644'
+  when: overwrite_existing_files | bool

@@ -1,35 +1,35 @@
-#!/usr/bin/env bash
+# Add to path
+add-to-path () {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
 
+# Cleans py[cod] and __pychache__ dirs in the current tree:
 pyclean () {
-    # Cleans py[cod] and __pychache__ dirs in the current tree:
     find . | grep -E "(__pycache__|\.py[cod]$)" | xargs rm -rf
 }
 
-create-snxrc-file () {
-    # Creates a ~/.snxrc file with the SNX credentials
-    echo "server $SNX_SERVER\nusername $SNX_USERNAME" > ~/.snxrc
-}
-
+# Connects to the VPN using SNX
 connect-to-vpn () {
-    # Connects to the VPN using SNX
     echo "Connecting to VPN..."
-    echo $SNX_PASSWORD | snx
+    echo $SNX_PASSWORD | snx -s $SNX_SERVER -u $SNX_USERNAME
 }
 
+# Connects to an EC2 instance using SSH
 connect-to-ec2 () {
-    # Connects to an EC2 instance using SSH
     aws ec2-instance-connect ssh \
         --os-user $AWS_INSTANCE_USER \
         --instance-id $AWS_INSTANCE_ID \
         --region $AWS_INSTANCE_REGION
 }
 
+# Pretty-prints a CSV file
 pretty-csv () {
-    # Pretty-prints a CSV file
     perl -pe 's/((?<=,)|(?<=^)),/ ,/g;' "$@" | column -t -s, | less  -F -S -X -K
 }
 
+# Pretty-prints a TSV file
 pretty_tsv () {
-    # Pretty-prints a TSV file
     perl -pe 's/((?<=\t)|(?<=^))\t/ \t/g;' "$@" | column -t -s $'\t' | less  -F -S -X -K
 }

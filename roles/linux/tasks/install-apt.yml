@@ -1,0 +1,27 @@
+---
+- name: Install core packages (apt)
+  become: true
+  ansible.builtin.apt:
+    name:
+      - curl
+      - wget
+      - git
+      - ca-certificates
+      - apt-transport-https
+      - gpg
+      - gnupg
+      - gdebi
+      - software-properties-common
+      - dirmngr
+      - lsb-release
+      - libssl-dev
+      - libsqlite3-dev
+      - libssl-dev
+      - libxml2-dev
+      - libcurl4-openssl-dev
+      - libreadline-dev
+      - libreadline8
+      - python-tk
+      - tk-dev
+    update_cache: true
+    state: present

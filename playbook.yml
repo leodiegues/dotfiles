@@ -1,0 +1,35 @@
+---
+- name: 'Bootstrap local environment'
+  hosts: local
+  roles:
+    # Local
+    - role: linux
+      tags: [linux]
+    - role: gnome
+      tags: [gnome]
+    - role: zsh
+      tags: [zsh]
+    - role: terminator
+      tags: [terminator]
+    - role: direnv
+      tags: [direnv]
+    - role: docker
+      tags: [docker]
+    - role: op
+      tags: [op]
+    - role: snx
+      tags: [snx]
+    - role: vscode
+      tags: [vscode]
+
+    # Galaxy
+    - role: staticdev.pyenv
+      vars:
+        pyenv_path: '{{ home }}/.pyenv'
+        pyenvrc_path: '{{ home }}'
+        pyenv_owner: '{{ user_name }}'
+        pyenv_global:
+          - 3.11.7
+        pyenv_enable_autocompletion: false
+        pyenv_python_versions:
+          - 3.11.7

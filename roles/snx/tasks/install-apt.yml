@@ -1,0 +1,27 @@
+---
+- name: Check if snx is installed
+  become: true
+  ansible.builtin.stat:
+    path: '/usr/bin/snx'
+  register: snx_installed
+
+- name: Add i386 architecture
+  become: true
+  shell: dpkg --add-architecture i386
+  when: not snx_installed.stat.exists
+
+- name: Install i386 libraries
+  become: true
+  ansible.builtin.apt:
+    name:
+      - libx11-6:i386
+      - libpam0g:i386
+      - libstdc++5:i386
+    update_cache: yes
+    state: present
+  when: not snx_installed.stat.exists
+
+- name: Install snx
+  become: true
+  ansible.builtin.script: files/snx_install_linux30.sh
+  when: not snx_installed.stat.exists
