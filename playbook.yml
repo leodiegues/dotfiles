@@ -15,8 +15,6 @@
       tags: [direnv]
     - role: docker
       tags: [docker]
-    - role: op
-      tags: [op]
     - role: snx
       tags: [snx]
     - role: vscode
