@@ -19,4 +19,3 @@
     src: '{{ role_files }}/'
     dest: '{{ xdg_config_home }}/direnv/'
     mode: '0644'
-  when: overwrite_existing_files | bool
