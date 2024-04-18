@@ -1,10 +1,3 @@
-# Add to path
-add-to-path () {
-    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-        PATH="${PATH:+"$PATH:"}$1"
-    fi
-}
-
 # Cleans py[cod] and __pychache__ dirs in the current tree:
 pyclean () {
     find . | grep -E "(__pycache__|\.py[cod]$)" | xargs rm -rf
@@ -33,3 +26,4 @@ pretty-csv () {
 pretty_tsv () {
     perl -pe 's/((?<=\t)|(?<=^))\t/ \t/g;' "$@" | column -t -s $'\t' | less  -F -S -X -K
 }
+

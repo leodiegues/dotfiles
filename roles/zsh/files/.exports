@@ -1,5 +1,13 @@
+# Add to path
+add-to-path () {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
+
+
 # Make nano the default editor
-export EDITOR='nano';
+export EDITOR='nvim';
 
 # Increase zsh history size
 export HISTSIZE='32768';

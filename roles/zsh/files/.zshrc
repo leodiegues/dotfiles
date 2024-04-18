@@ -29,7 +29,7 @@ fi
 
 # Load `pyenv` if available:
 if [ -d $HOME/.pyenv ]; then
-    eval "$(pyenv init -)"
+    eval "$(pyenv init --path)"
 fi
 
 # Load direnv if available:

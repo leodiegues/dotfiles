@@ -1,0 +1,33 @@
+---
+- name: Check if tmux is installed
+  become: true
+  ansible.builtin.stat:
+    path: '/usr/bin/tmux'
+  register: tmux_installed
+
+- name: Install tmux
+  become: true
+  ansible.builtin.apt:
+    name: tmux
+    update_cache: true
+    state: present
+  when: not tmux_installed.stat.exists
+
+- name: Check if config directory exists
+  ansible.builtin.stat:
+    path: '{{ xdg_config_home }}/tmux'
+  register: tmux_config_dir
+
+- name: Create config directory
+  ansible.builtin.command: mkdir -p "{{ xdg_config_home }}/tmux"
+  when: not tmux_config_dir.stat.exists
+
+- name: Copy tmux config to default path
+  ansible.builtin.copy:
+    src: files/
+    dest: '{{ xdg_config_home }}/tmux/'
+    owner: '{{ user_name }}'
+    group: '{{ user_name }}'
+    mode: 0644
+  when: tmux_config_dir.stat.exists
+

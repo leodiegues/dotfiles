@@ -1,0 +1,29 @@
+---
+- name: Check if neovim is installed
+  become: true
+  ansible.builtin.stat:
+    path: '/snap/bin/nvim'
+  register: nvim_installed
+
+- name: Install neovim
+  become: true
+  ansible.builtin.command: snap install nvim --classic
+  when: not nvim_installed.stat.exists
+
+- name: Check if config directory exists
+  ansible.builtin.stat:
+    path: '{{ xdg_config_home }}/nvim'
+  register: nvim_config_dir
+
+- name: Create config directory
+  ansible.builtin.command: mkdir -p "{{ xdg_config_home }}/nvim"
+  when: not nvim_config_dir.stat.exists
+
+- name: Copy neovim configs to default path
+  ansible.builtin.copy:
+    src: files/
+    dest: '{{ xdg_config_home }}/nvim/'
+    owner: '{{ user_name }}'
+    group: '{{ user_name }}'
+    mode: 0644
+  when: nvim_installed.stat.exists

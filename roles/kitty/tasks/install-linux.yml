@@ -1,0 +1,27 @@
+---
+- name: Check if Kitty already exists
+  become: true
+  ansible.builtin.stat:
+    path: '{{ home }}/.local/kitty.app/bin/kitty'
+  register: kitty_installed
+
+- name: Install Kitty
+  ansible.builtin.command: curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin
+  when: not kitty_installed.stat.exists
+
+- name: Configure Kitty as default terminal
+  become: true
+  ansible.builtin.shell: 
+    cmd: |
+      update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator "{{ home }}/.local/kitty.app/bin/kitty" 50
+      update-alternatives --set x-terminal-emulator "{{ home }}/.local/kitty.app/bin/kitty"
+  when: kitty_installed.stat.exists 
+
+- name: Copy Kitty config to default path
+  ansible.builtin.copy:
+    src: files/
+    dest: '{{ xdg_config_home }}/kitty/'
+    owner: '{{ user_name }}'
+    group: '{{ user_name }}'
+    mode: 0644
+  when: kitty_installed.stat.exists

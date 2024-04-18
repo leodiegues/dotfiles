@@ -1,0 +1,25 @@
+---
+- name: Create local fonts folder
+  ansible.builtin.command: mkdir -p "{{ fonts_dir }}"
+
+- name: Install Nerd Fonts
+  ansible.builtin.shell:
+    cmd: |
+      cd {{ home }}/Downloads
+      curl -OL "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.2.1/{{ item.value }}"
+      unzip -o {{ item.value }} -d "{{ fonts_dir }}/{{ item.key }}"
+  with_dict:
+    symbols-only-nf: NerdFontsSymbolsOnly.zip
+    jetbrains-mono-nf: JetBrainsMono.zip
+    fira-code-nf: FiraCode.zip
+    meslo-nf: Meslo.zip
+
+- name: Install Comic Code
+  ansible.builtin.shell:
+    cmd: |
+      cd {{ home }}/Downloads
+      curl -L "https://github.com/Mr-Coxall/Comic-Code-Font/archive/refs/heads/main.zip" > ComicCode.zip
+      unzip -o ComicCode.zip -d "{{ fonts_dir }}/comic-code"
+
+- name: Refresh font catalogue
+  ansible.builtin.command: fc-cache -fv

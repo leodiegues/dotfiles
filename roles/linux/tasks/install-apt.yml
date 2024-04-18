@@ -23,5 +23,7 @@
       - libreadline8
       - python-tk
       - tk-dev
+      - ripgrep
+      - snapd
     update_cache: true
     state: present
