@@ -7,10 +7,16 @@
       tags: [linux]
     - role: gnome
       tags: [gnome]
+    - role: fonts
+      tags: [fonts]
     - role: zsh
       tags: [zsh]
-    - role: terminator
-      tags: [terminator]
+    - role: kitty
+      tags: [kitty]
+    - role: neovim
+      tags: [neovim]
+    - role: tmux
+      tags: [tmux]
     - role: direnv
       tags: [direnv]
     - role: docker
@@ -21,6 +27,8 @@
       tags: [vscode]
     - role: node
       tags: [node]
+    - role: lazygit
+      tags: [lazygit]
 
     # Galaxy
     - role: staticdev.pyenv
