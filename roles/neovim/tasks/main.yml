@@ -1,3 +1,0 @@
----
-- include_tasks: install-linux.yml
-  when: ansible_system == 'Linux'

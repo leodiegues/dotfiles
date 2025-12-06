@@ -1,4 +1,0 @@
----
-- include_tasks: install-ubuntu.yml
-  when: ansible_distribution == 'Ubuntu' or ansible_distribution == 'Pop!_OS'
-  tags: [ubuntu]
