@@ -1,17 +1,3 @@
-# Zoxide + cd
-if command -v zoxide &>/dev/null; then
-    alias cd="zd"
-    zd() {
-        if [ $# -eq 0 ]; then
-            builtin cd ~ && return
-        elif [ -d "$1" ]; then
-            builtin cd "$1"
-        else
-            z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
-        fi
-    }
-fi
-
 # Docker
 alias d='docker'
 alias dc='docker compose'
@@ -21,13 +7,65 @@ alias dcd='docker compose down'
 alias dcdv='docker compose down -v'
 alias dcr='docker compose run --rm'
 
-# Ansible
-alias play='ansible-playbook'
+# Kubernetes
+alias k='kubectl'
+alias kg='kubectl get'
+alias kgp='kubectl get pods'
+alias kgn='kubectl get nodes'
+alias kgd='kubectl get deployments'
+alias kgs='kubectl get services'
+alias kgns='kubectl get namespaces'
+alias kga='kubectl get all'
+alias kgaa='kubectl get all --all-namespaces'
+alias kd='kubectl describe'
+alias ka='kubectl apply -f'
+alias krm='kubectl delete'
+alias kl='kubectl logs -f'
+alias kex='kubectl exec -it'
 
 # System
 alias pwroff='shutdown -h now'
+alias mkd='mkdir -p'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias decompress="tar -xzf"
+alias cd="zd"
+zd() {
+  if [ $# -eq 0 ]; then
+    builtin cd ~ && return
+  elif [ -d "$1" ]; then
+    builtin cd "$1"
+  else
+    z "$@" && printf "\U000F17A9 " && pwd || echo "Error: Directory not found"
+  fi
+}
 
-# Go-tos
-alias cdw='cd ~/workspaces'
-alias cdp='cd ~/workspaces/personal'
-alias cdd='cd ~/dotfiles'
+# Tmux
+alias t='tmux'
+alias tls='tmux ls'
+alias tnew='tmux new -s'
+alias ta='tmux attach -t'
+alias tks='tmux kill-session -t'
+alias tka='tmux kill-server'
+
+# Git
+alias gs='git status -sb'
+alias gpl='git pull'
+alias gps='git push'
+alias gaa='git add .'
+alias gap='git add -p'
+alias gc='git commit'
+alias gcm='git commit -m'
+alias gco='git checkout'
+alias gcom='git checkout main'
+alias gcb='git checkout -b'
+alias gc='git branch'
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+
+# Lazy-stuff
+alias lzg='lazygit'
+alias lzd='lazydocker'
+
+# Antigravity
+alias agy='Antigravity'
