@@ -86,9 +86,15 @@ sync_configs() {
 }
 
 unsync_configs() {
-    print_banner "UNLINKING DOTFILES"
+    local filter_pattern="$1"
 
-    log_warning "This will remove all symlinks created by dotfiles"
+    if [ -n "$filter_pattern" ]; then
+        print_banner "UNLINKING: $filter_pattern"
+        log_warning "This will remove symlinks matching: $filter_pattern"
+    else
+        print_banner "UNLINKING DOTFILES"
+        log_warning "This will remove all symlinks created by dotfiles"
+    fi
 
     if ! ask_yes_no "Continue?" "n"; then
         log_info "Cancelled"
@@ -103,7 +109,15 @@ unsync_configs() {
         [[ -z "$source" || "$source" =~ ^[[:space:]]*# ]] && continue
 
         # Trim whitespace
+        source=$(echo "$source" | xargs)
         dest=$(echo "$dest" | xargs)
+
+        # Filter by pattern if provided
+        if [ -n "$filter_pattern" ]; then
+            if [[ ! "$source" =~ $filter_pattern ]]; then
+                continue
+            fi
+        fi
 
         # Expand variables
         dest=$(eval echo "$dest")
@@ -170,13 +184,14 @@ Sync dotfiles configurations using symlinks.
 
 COMMANDS:
     link        Create symlinks (default)
-    unlink      Remove all dotfiles symlinks
+    unlink      Remove dotfiles symlinks
     list        List symlink status
     help        Show this help message
 
 PATTERN:
-    Optional filter pattern to link only matching configs.
+    Optional filter pattern to match configs.
     Matches against the source path in symlinks.conf.
+    Works with both 'link' and 'unlink' commands.
 
 EXAMPLES:
     # Create all symlinks
@@ -198,6 +213,12 @@ EXAMPLES:
     # Remove all symlinks
     ./sync unlink
 
+    # Remove only zsh symlinks
+    ./sync unlink zsh
+
+    # Remove only .zshrc symlink
+    ./sync unlink .zshrc
+
 CONFIGURATION:
     Symlinks are defined in: configs/symlinks.conf
 
@@ -213,7 +234,7 @@ case "${1:-link}" in
     sync_configs "$2"
     ;;
   unlink | remove | uninstall)
-    unsync_configs
+    unsync_configs "$2"
     ;;
   list | status | ls)
     list_symlinks
