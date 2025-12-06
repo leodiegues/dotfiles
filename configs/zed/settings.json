@@ -1,11 +1,3 @@
-// Zed settings
-//
-// For information on how to configure Zed, see the Zed
-// documentation: https://zed.dev/docs/configuring-zed
-//
-// To see all of Zed's default settings without changing your
-// custom settings, run the `open default settings` command
-// from the command palette or from `Zed` application menu.
 {
   "vim_mode": true,
   "show_edit_predictions": true,
@@ -47,7 +39,6 @@
       "show_edit_predictions": false
     },
     "TypeScript": {
-      // Refer https://github.com/jellydn/ts-inlay-hints for how to setup for Neovim and VSCode
       "inlay_hints": {
         "enabled": true,
         "show_parameter_hints": false,
@@ -71,7 +62,12 @@
           }
         }
       ],
-      "language_servers": ["pyrefly", "ruff", "!pyright", "!pylsp"]
+      "language_servers": [
+        "pyrefly",
+        "ruff",
+        "!pyright",
+        "!pylsp"
+      ]
     }
   },
   "terminal": {
@@ -80,10 +76,16 @@
     }
   },
   "file_types": {
-    "Dockerfile": ["Dockerfile", "Dockerfile.*"],
-    "JSON": ["json", "jsonc", "*.code-snippets"]
+    "Dockerfile": [
+      "Dockerfile",
+      "Dockerfile.*"
+    ],
+    "JSON": [
+      "json",
+      "jsonc",
+      "*.code-snippets"
+    ]
   },
-  // File scan exclusions, hide on the file explorer and search
   "file_scan_exclusions": [
     "**/.git",
     "**/.svn",
@@ -93,7 +95,6 @@
     "**/Thumbs.db",
     "**/.classpath",
     "**/.settings",
-    // above is default from Zed
     "**/out",
     "**/dist",
     "**/.husky",
@@ -107,7 +108,6 @@
     "**/report",
     "**/node_modules"
   ],
-  // Move all panel to the right
   "project_panel": {
     "button": true,
     "dock": "left",
