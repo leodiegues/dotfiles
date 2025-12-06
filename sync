@@ -1,0 +1,230 @@
+#!/usr/bin/env bash
+# sync - Symlink dotfiles configs to home directory
+
+set -e
+
+# Get dotfiles directory
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+# Source libraries
+source "$DOTFILES/libs/init.sh"
+
+# Set XDG directories
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+
+# Symlink configuration file
+SYMLINK_CONF="$DOTFILES/configs/symlinks.conf"
+
+# ============================================================================
+# Main Functions
+# ============================================================================
+
+sync_configs() {
+  local filter_pattern="$1"
+
+  if [ -n "$filter_pattern" ]; then
+    print_banner "SYNCING: $filter_pattern"
+  else
+    print_banner "SYNCING DOTFILES"
+  fi
+
+  log_info "Reading symlink configuration from: $SYMLINK_CONF"
+
+  if [ ! -f "$SYMLINK_CONF" ]; then
+    log_error "Symlink configuration not found: $SYMLINK_CONF"
+    exit 1
+  fi
+
+  local linked_count=0
+  local skipped_count=0
+
+  # Read symlink configuration
+  while IFS=: read -r source dest || [ -n "$source" ]; do
+    # Skip empty lines and comments
+    [[ -z "$source" || "$source" =~ ^[[:space:]]*# ]] && continue
+
+    # Trim whitespace
+    source=$(echo "$source" | xargs)
+    dest=$(echo "$dest" | xargs)
+
+    # Filter by pattern if provided
+    if [ -n "$filter_pattern" ]; then
+      if [[ ! "$source" =~ $filter_pattern ]]; then
+        continue
+      fi
+    fi
+
+    # Expand variables in destination
+    dest=$(eval echo "$dest")
+
+    # Full source path
+    local src_path="$DOTFILES/configs/$source"
+
+    # Check if source exists
+    if [ ! -e "$src_path" ]; then
+      log_warning "Source not found, skipping: $src_path"
+      ((skipped_count++))
+      continue
+    fi
+
+    # Create symlink
+    if link_config "$src_path" "$dest"; then
+      ((linked_count++))
+    else
+      ((skipped_count++))
+    fi
+
+  done <"$SYMLINK_CONF"
+
+  newline
+  log_success "Synced $linked_count config(s)"
+
+  if [ $skipped_count -gt 0 ]; then
+    log_warning "Skipped $skipped_count config(s)"
+  fi
+}
+
+unsync_configs() {
+    print_banner "UNLINKING DOTFILES"
+
+    log_warning "This will remove all symlinks created by dotfiles"
+
+    if ! ask_yes_no "Continue?" "n"; then
+        log_info "Cancelled"
+        exit 0
+    fi
+
+    local unlinked_count=0
+
+    # Read symlink configuration
+    while IFS=: read -r source dest || [ -n "$source" ]; do
+        # Skip empty lines and comments
+        [[ -z "$source" || "$source" =~ ^[[:space:]]*# ]] && continue
+
+        # Trim whitespace
+        dest=$(echo "$dest" | xargs)
+
+        # Expand variables
+        dest=$(eval echo "$dest")
+
+        # Remove symlink if it exists and points to dotfiles
+        if [ -L "$dest" ]; then
+            local link_target=$(readlink "$dest")
+            if [[ "$link_target" == "$DOTFILES"* ]]; then
+                rm "$dest"
+                log_success "Unlinked: $dest"
+                ((unlinked_count++))
+            else
+                log_info "Not a dotfiles symlink, skipping: $dest"
+            fi
+        fi
+
+    done < "$SYMLINK_CONF"
+
+    newline
+    log_success "Unlinked $unlinked_count config(s)"
+}
+
+list_symlinks() {
+    print_banner "DOTFILES SYMLINKS"
+
+    echo "Configuration file: $SYMLINK_CONF"
+    newline
+
+    # Read symlink configuration
+    while IFS=: read -r source dest || [ -n "$source" ]; do
+        # Skip empty lines and comments
+        [[ -z "$source" || "$source" =~ ^[[:space:]]*# ]] && continue
+
+        # Trim whitespace
+        source=$(echo "$source" | xargs)
+        dest=$(echo "$dest" | xargs)
+
+        # Expand variables
+        dest=$(eval echo "$dest")
+        local src_path="$DOTFILES/configs/$source"
+
+        # Check status
+        if [ -L "$dest" ]; then
+            local link_target=$(readlink "$dest")
+            if [ "$link_target" = "$src_path" ]; then
+                print_list_item "success" "$dest → $source"
+            else
+                print_list_item "warning" "$dest → (points elsewhere)"
+            fi
+        elif [ -e "$dest" ]; then
+            print_list_item "warning" "$dest (file exists, not symlink)"
+        else
+            print_list_item "pending" "$dest (not linked)"
+        fi
+
+    done < "$SYMLINK_CONF"
+}
+
+show_help() {
+  cat <<EOF
+Usage: $(basename "$0") [COMMAND] [PATTERN]
+
+Sync dotfiles configurations using symlinks.
+
+COMMANDS:
+    link        Create symlinks (default)
+    unlink      Remove all dotfiles symlinks
+    list        List symlink status
+    help        Show this help message
+
+PATTERN:
+    Optional filter pattern to link only matching configs.
+    Matches against the source path in symlinks.conf.
+
+EXAMPLES:
+    # Create all symlinks
+    ./sync
+    ./sync link
+
+    # Link only zsh configs
+    ./sync link zsh
+
+    # Link only .zshrc file
+    ./sync link .zshrc
+
+    # Link neovim configs
+    ./sync link nvim
+
+    # Check symlink status
+    ./sync list
+
+    # Remove all symlinks
+    ./sync unlink
+
+CONFIGURATION:
+    Symlinks are defined in: configs/symlinks.conf
+
+EOF
+}
+
+# ============================================================================
+# Command Dispatcher
+# ============================================================================
+
+case "${1:-link}" in
+  link | install)
+    sync_configs "$2"
+    ;;
+  unlink | remove | uninstall)
+    unsync_configs
+    ;;
+  list | status | ls)
+    list_symlinks
+    ;;
+  help | --help | -h)
+    show_help
+    ;;
+  *)
+    log_error "Unknown command: $1"
+    echo ""
+    show_help
+    exit 1
+    ;;
+esac

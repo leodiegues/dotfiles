@@ -1,0 +1,11 @@
+adjust-cell-height = 7
+adjust-cell-width = 0
+alpha-blending = linear-corrected
+cursor-style = block
+font-size = 10
+font-family = Comic Code Ligatures
+shell-integration = zsh
+shell-integration-features = no-cursor
+theme = Catppuccin Mocha
+window-padding-x = 10
+window-padding-y = 10

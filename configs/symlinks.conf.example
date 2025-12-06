@@ -1,0 +1,46 @@
+# Symlink Configuration
+#
+# This file defines which configs get symlinked where.
+#
+# FORMAT:
+#   SOURCE:DESTINATION
+#
+# - SOURCE is relative to configs/ directory
+# - DESTINATION supports variables: $HOME, $XDG_CONFIG_HOME
+# - Lines starting with # are comments
+# - Empty lines are ignored
+#
+# EXAMPLES:
+#
+# Single file:
+#   zsh/.zshrc:$HOME/.zshrc
+#
+# Entire directory:
+#   neovim:$XDG_CONFIG_HOME/nvim
+#
+# VARIABLES:
+#   $HOME              - User home directory
+#   $XDG_CONFIG_HOME   - ~/.config (or custom XDG config dir)
+#   $XDG_DATA_HOME     - ~/.local/share (or custom XDG data dir)
+
+# Zsh shell configuration
+zsh/.zshrc:$HOME/.zshrc
+zsh/.aliases:$HOME/.aliases
+zsh/.exports:$HOME/.exports
+zsh/.functions:$HOME/.functions
+
+# Tmux terminal multiplexer
+tmux/tmux.conf:$XDG_CONFIG_HOME/tmux/tmux.conf
+
+# Neovim editor
+nvim:$XDG_CONFIG_HOME/nvim
+
+# Kitty terminal
+kitty:$XDG_CONFIG_HOME/kitty
+
+# Direnv environment manager
+direnv:$XDG_CONFIG_HOME/direnv
+
+# ADD YOUR OWN:
+# myconfig/config.yml:$HOME/.myconfig.yml
+# myapp:$XDG_CONFIG_HOME/myapp

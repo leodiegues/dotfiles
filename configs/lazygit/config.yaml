@@ -1,0 +1,10 @@
+os:
+  shellFunctionsFile: ~/.zshrc
+customCommands:
+  - key: "<c-g>"
+    context: "files"
+    command: "cc-gen-commit-msg > .git/LAZYGIT_PENDING_COMMIT"
+    loadingText: "Generating commit message..."
+    description: "Generated commit message by AI"
+    output: "none"
+    outputTitle: "Generated message"
