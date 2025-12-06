@@ -137,6 +137,23 @@ else
 fi
 
 # ============================================================================
+# Install Global Tools
+# ============================================================================
+
+log_header "Installing Global Tools"
+
+GLOBAL_TOOLS=("ruff" "pre-commit" "ty")
+
+for tool in "${GLOBAL_TOOLS[@]}"; do
+  log_step "Installing $tool..."
+  if uv tool install "$tool"; then
+    log_success "$tool installed successfully"
+  else
+    log_warning "Failed to install $tool"
+  fi
+done
+
+# ============================================================================
 # Summary
 # ============================================================================
 
@@ -157,7 +174,13 @@ echo "  uv sync          # Install dependencies"
 echo "  uv run <cmd>     # Run a command in the project environment"
 echo "  uv pip install   # Use as a pip replacement"
 echo "  uv python list   # List available Python versions"
+echo "  uv tool list     # List installed global tools"
 echo "  uv self update   # Upgrade uv"
+echo ""
+echo "Installed global tools:"
+echo "  • ruff        - Extremely fast Python linter and formatter"
+echo "  • pre-commit  - Framework for managing git hooks"
+echo "  • ty          - Python type checker"
 echo ""
 echo "Next steps:"
 echo "  1. Restart your terminal or run: source ~/.zshrc"
