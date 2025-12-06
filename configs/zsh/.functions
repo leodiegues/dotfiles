@@ -9,7 +9,7 @@ pretty-csv() {
 }
 
 # Pretty-prints a TSV file
-pretty_tsv() {
+pretty-tsv() {
     perl -pe 's/((?<=\t)|(?<=^))\t/ \t/g;' "$@" | column -t -s $'\t' | less -F -S -X -K
 }
 
@@ -106,7 +106,7 @@ cc-gen-commit-msg() {
     if [ -n "$changed_files" ]; then
         git diff --cached | claude -p \
             --model "claude-haiku-4-5" \
-            --max-turns 3 \
-            "You are an expert software engineer. Generate a commit message based on the staged diff using Conventional Commits notation. Output ONLY the commit message in Brazilian Portuguese, with no explanations, questions, or additional text. Don't wrap the commit with a markdown code block. Return only the commit. Use the imperative mood (e.g., 'atualiza', 'corrige', 'adiciona') instead of infinitive verbs (e.g., 'atualizar', 'corrigir', 'adicionar'). Just the commit message itself."
+            --max-turns 5 \
+            "You are an expert software engineer. Generate a commit message based on the staged diff using Conventional Commits notation. Output ONLY the commit message with no explanations, questions, or additional text. Don't wrap the commit with a markdown code block. Return only the commit message itself."
     fi
 }

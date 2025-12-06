@@ -1,5 +1,5 @@
 os:
-  shellFunctionsFile: ~/.zshrc
+  shellFunctionsFile: ~/.functions
 customCommands:
   - key: "<c-g>"
     context: "files"
